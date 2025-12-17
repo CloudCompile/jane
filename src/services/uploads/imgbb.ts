@@ -95,7 +95,7 @@ class ImgBBService {
     }
 
     try {
-      const response = await fetch(this.apiKey, {
+      const response = await fetch(this.baseUrl, {
         method: 'POST',
         body: formData,
       })

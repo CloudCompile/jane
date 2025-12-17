@@ -547,6 +547,15 @@ function ProviderDetail() {
                                 ),
                               }}
                             />
+                            {provider?.provider === 'pollinations' &&
+                              setting.key === 'api-key' &&
+                              import.meta.env.VITE_POLLINATIONS_API_KEY && (
+                                <div className="mt-2 px-3 py-2 rounded-md bg-blue-500/10 border border-blue-500/20">
+                                  <p className="text-xs text-blue-500 font-medium">
+                                    ℹ️ Default API key is configured. Leave empty to use the default key for testing.
+                                  </p>
+                                </div>
+                              )}
                             {setting.key === 'version_backend' &&
                               setting.controller_props?.recommended && (
                                 <div className="mt-1 text-sm text-main-view-fg/60">
