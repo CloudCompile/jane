@@ -36,6 +36,17 @@ export default defineConfig({
           return path.resolve(__dirname, './src/test/mocks/extensions-web.ts')
         }
       })(),
+      // Provide a fallback for @janhq/core when it doesn't exist (CICD desktop builds)
+      '@janhq/core': (() => {
+        try {
+          // Try to resolve the actual package first
+          require.resolve('@janhq/core')
+          return '@janhq/core'
+        } catch {
+          // If package doesn't exist, use a mock
+          return path.resolve(__dirname, './src/test/mocks/janhq-core')
+        }
+      })(),
     },
   },
   define: {

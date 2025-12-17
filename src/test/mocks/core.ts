@@ -150,6 +150,7 @@ export enum AppEvent {
   onAppUpdateDownloadSuccess = 'onAppUpdateDownloadSuccess',
   onAppUpdateDownloadError = 'onAppUpdateDownloadError',
   onAppUpdateDownloadCancelled = 'onAppUpdateDownloadCancelled',
+  onModelImported = 'onModelImported',
 }
 
 // Interfaces
@@ -267,11 +268,45 @@ export const APIRoutes = [
   'deleteMessage',
 ]
 
-// Events
-export const events = {
-  DownloadUpdate: 'download_update',
-  ModelUpdate: 'model_update',
+// EventEmitter class for events
+class EventEmitter {
+  private handlers: Map<string, Function[]>
+
+  constructor() {
+    this.handlers = new Map<string, Function[]>()
+  }
+
+  public on(eventName: string, handler: Function): void {
+    if (!this.handlers.has(eventName)) {
+      this.handlers.set(eventName, [])
+    }
+    this.handlers.get(eventName)?.push(handler)
+  }
+
+  public off(eventName: string, handler: Function): void {
+    if (!this.handlers.has(eventName)) {
+      return
+    }
+    const handlers = this.handlers.get(eventName)
+    const index = handlers?.indexOf(handler)
+    if (index !== undefined && index !== -1) {
+      handlers?.splice(index, 1)
+    }
+  }
+
+  public emit(eventName: string, args: any): void {
+    if (!this.handlers.has(eventName)) {
+      return
+    }
+    const handlers = this.handlers.get(eventName)
+    handlers?.forEach((handler) => {
+      handler(args)
+    })
+  }
 }
+
+// Events - Create an EventEmitter instance instead of a plain object
+export const events = new EventEmitter()
 
 // Mock functions
 export const modelInfo = (model: any): ModelInfo => {
