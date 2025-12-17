@@ -87,6 +87,8 @@ class PollinationsService {
 
   /**
    * Generate a video from a text prompt
+   * Note: Uses the same /image endpoint as image generation.
+   * The model parameter determines whether output is image or video.
    */
   async generateVideo(
     prompt: string,
@@ -100,6 +102,8 @@ class PollinationsService {
     if (options.audio) params.append('audio', 'true')
     if (options.referenceImage) params.append('image', options.referenceImage)
 
+    // API uses /image endpoint for both images and videos
+    // The model type (veo, seedance) determines video output
     const url = `${this.baseUrl}/image/${encodeURIComponent(prompt)}?${params.toString()}`
 
     const headers: HeadersInit = {}

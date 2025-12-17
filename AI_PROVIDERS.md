@@ -17,11 +17,11 @@ Create a `.env` file in the root directory with the following variables:
 ```env
 # Pollinations.AI API Key
 # Used as default for AI model provider (chat, image, video generation)
-VITE_POLLINATIONS_API_KEY=sk_wV8ESNksRQWtYjykYkJ96mPl6GkOpjQ0
+VITE_POLLINATIONS_API_KEY=your_pollinations_api_key_here
 
 # ImgBB API Key  
 # Used for reference video/image uploads
-VITE_IMGBB_API_KEY=e82829283492d3b08c9c2ad556ce7a37
+VITE_IMGBB_API_KEY=your_imgbb_api_key_here
 ```
 
 > ⚠️ **Note**: The `.env` file is gitignored. Use `.env.example` as a template for your local development.
