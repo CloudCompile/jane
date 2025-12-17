@@ -237,19 +237,35 @@ export class ModelManager {
 }
 
 // Constants
-export const CoreRoutes = {
-  Models: '/models',
-  Threads: '/threads',
-  Messages: '/messages',
-  Assistants: '/assistants',
-}
+export const CoreRoutes = [
+  'loadModel',
+  'unloadModel',
+  'getLoadedModel',
+  'getModels',
+  'stopServer',
+  'startServer',
+  'updateModel',
+  'downloadModel',
+  'cancelModelDownload',
+  'deleteModel',
+]
 
-export const APIRoutes = {
-  Models: '/api/models',
-  Threads: '/api/threads',
-  Messages: '/api/messages',
-  Assistants: '/api/assistants',
-}
+export const APIRoutes = [
+  'listModels',
+  'retrieveModel',
+  'deleteModel',
+  'createChatCompletion',
+  'listThreads',
+  'retrieveThread',
+  'createThread',
+  'updateThread',
+  'deleteThread',
+  'listMessages',
+  'retrieveMessage',
+  'createMessage',
+  'updateMessage',
+  'deleteMessage',
+]
 
 // Events
 export const events = {
