@@ -196,17 +196,18 @@ export interface AIEngine {
 
 // Classes
 export class EngineManager {
-  static instance: EngineManager
+  private static _instance: EngineManager
+  engines: Map<string, AIEngine> = new Map()
   
-  static getInstance() {
-    if (!EngineManager.instance) {
-      EngineManager.instance = new EngineManager()
+  static instance() {
+    if (!EngineManager._instance) {
+      EngineManager._instance = new EngineManager()
     }
-    return EngineManager.instance
+    return EngineManager._instance
   }
 
   get(engineId: string): AIEngine | undefined {
-    return undefined
+    return this.engines.get(engineId)
   }
 
   register(engine: AIEngine) {
