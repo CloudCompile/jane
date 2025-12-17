@@ -345,7 +345,9 @@ const DropdownModelProvider = ({
 
     return fzfInstance.find(searchValue.toLowerCase()).map((result) => {
       const item = result.item
-      const positions = Array.from(result.positions) || []
+      const positions = result.positions && typeof result.positions[Symbol.iterator] === 'function'
+        ? Array.from(result.positions)
+        : []
       const highlightedId = highlightFzfMatch(
         item.model.id,
         positions,
