@@ -31,35 +31,44 @@ export function getModelDisplayName(model: Model): string {
 }
 
 export function getProviderLogo(provider: string) {
+  const basePath = import.meta.env.BASE_URL || '/'
+  // Ensure basePath ends with / for proper path concatenation
+  const normalizedBase = basePath.endsWith('/') ? basePath : `${basePath}/`
+  
   switch (provider) {
     case 'jan':
-      return '/images/model-provider/jan.png'
+      return `${normalizedBase}images/model-provider/jan.png`
     case 'llamacpp':
-      return '/images/model-provider/llamacpp.svg'
+      return `${normalizedBase}images/model-provider/llamacpp.svg`
     case 'anthropic':
-      return '/images/model-provider/anthropic.svg'
+      return `${normalizedBase}images/model-provider/anthropic.svg`
     case 'huggingface':
-      return '/images/model-provider/huggingface.svg'
+      return `${normalizedBase}images/model-provider/huggingface.svg`
     case 'mistral':
-      return '/images/model-provider/mistral.svg'
+      return `${normalizedBase}images/model-provider/mistral.svg`
     case 'openrouter':
-      return '/images/model-provider/open-router.svg'
+      return `${normalizedBase}images/model-provider/open-router.svg`
     case 'groq':
-      return '/images/model-provider/groq.svg'
+      return `${normalizedBase}images/model-provider/groq.svg`
     case 'cohere':
-      return '/images/model-provider/cohere.svg'
+      return `${normalizedBase}images/model-provider/cohere.svg`
     case 'gemini':
-      return '/images/model-provider/gemini.svg'
+      return `${normalizedBase}images/model-provider/gemini.svg`
     case 'openai':
-      return '/images/model-provider/openai.svg'
+      return `${normalizedBase}images/model-provider/openai.svg`
     case 'azure':
-      return '/images/model-provider/azure.svg'
+      return `${normalizedBase}images/model-provider/azure.svg`
     default:
       return undefined
   }
 }
 
 export const getProviderTitle = (provider: string) => {
+  // Guard against undefined/null provider
+  if (!provider || typeof provider !== 'string') {
+    return 'Unknown'
+  }
+  
   switch (provider) {
     case 'jan':
       return 'Jan'

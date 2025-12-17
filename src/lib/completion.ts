@@ -214,6 +214,30 @@ export const sendCompletion = async (
         'X-Title': 'Jan',
       },
     }),
+    // Pollinations doesn't support custom headers in CORS requests
+    // Use a custom fetch that removes problematic headers
+    ...(provider.provider === 'pollinations' && {
+      fetch: async (url: RequestInfo | URL, init?: RequestInit) => {
+        // Clone the init object to avoid modifying the original
+        const modifiedInit = init ? { ...init } : {}
+        
+        // Remove headers that cause CORS preflight failures
+        if (modifiedInit.headers) {
+          const headers = new Headers(modifiedInit.headers)
+          headers.delete('x-api-key')
+          headers.delete('x-stainless-timeout')
+          headers.delete('x-stainless-retry-count')
+          headers.delete('x-stainless-max-retries')
+          // Only keep Authorization if API key is provided and non-empty
+          if (!provider.api_key || provider.api_key.trim().length === 0) {
+            headers.delete('Authorization')
+          }
+          modifiedInit.headers = headers
+        }
+        
+        return fetch(url, modifiedInit)
+      },
+    }),
     // Add Origin header for local providers to avoid CORS issues
     ...((provider.base_url?.includes('localhost:') ||
       provider.base_url?.includes('127.0.0.1:')) && {

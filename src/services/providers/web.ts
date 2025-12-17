@@ -112,20 +112,22 @@ export class WebProvidersService implements ProvidersService {
     }
 
     try {
-      const headers: Record<string, string> = {
-        'Content-Type': 'application/json',
-      }
+      const headers: Record<string, string> = {}
 
       // Only add authentication headers if API key is provided
-      if (provider.api_key) {
-        headers['x-api-key'] = provider.api_key
-        headers['Authorization'] = `Bearer ${provider.api_key}`
+      // Don't add Content-Type for GET requests as it can cause CORS preflight issues
+      if (provider.api_key && provider.api_key.trim().length > 0) {
+        // For Pollinations and similar services that don't require auth, skip headers
+        // to avoid CORS preflight issues
+        if (provider.provider !== 'pollinations') {
+          headers['Authorization'] = `Bearer ${provider.api_key}`
+        }
       }
 
       // Use browser's native fetch for web environment
       const response = await fetch(`${provider.base_url}/models`, {
         method: 'GET',
-        headers,
+        headers: Object.keys(headers).length > 0 ? headers : undefined,
       })
 
       if (!response.ok) {

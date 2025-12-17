@@ -159,8 +159,6 @@ describe('WebProvidersService', () => {
         {
           method: 'GET',
           headers: {
-            'Content-Type': 'application/json',
-            'x-api-key': 'test-key',
             'Authorization': 'Bearer test-key',
           },
         }
