@@ -79,9 +79,10 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
-      // Use mock for @jan/extensions-web if the workspace package doesn't exist
+      // Use mocks for workspace packages when building standalone
       '@jan/extensions-web': path.resolve(__dirname, './src/test/mocks/extensions-web.ts'),
       '@janhq/conversational-extension': path.resolve(__dirname, './src/test/mocks/extensions-web.ts'),
+      '@janhq/core': path.resolve(__dirname, './src/test/mocks/janhq-core'),
     },
   },
   define: {
