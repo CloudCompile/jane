@@ -39,6 +39,13 @@ export enum MessageStatus {
   Read = 'read',
 }
 
+export enum ChatCompletionRole {
+  User = 'user',
+  Assistant = 'assistant',
+  System = 'system',
+  Tool = 'tool',
+}
+
 // Types
 export type ModelInfo = {
   id: string
@@ -295,6 +302,7 @@ export default {
   ContentType,
   DownloadState,
   MessageStatus,
+  ChatCompletionRole,
   DownloadEvent,
   AppEvent,
   EngineManager,
