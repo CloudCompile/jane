@@ -11,14 +11,15 @@ import {
 
 describe('getProviderLogo', () => {
   it('returns correct logo paths for known providers', () => {
+    const basePath = import.meta.env.BASE_URL || '/'
     expect(getProviderLogo('llamacpp')).toBe(
-      '/images/model-provider/llamacpp.svg'
+      `${basePath}images/model-provider/llamacpp.svg`
     )
     expect(getProviderLogo('anthropic')).toBe(
-      '/images/model-provider/anthropic.svg'
+      `${basePath}images/model-provider/anthropic.svg`
     )
-    expect(getProviderLogo('openai')).toBe('/images/model-provider/openai.svg')
-    expect(getProviderLogo('gemini')).toBe('/images/model-provider/gemini.svg')
+    expect(getProviderLogo('openai')).toBe(`${basePath}images/model-provider/openai.svg`)
+    expect(getProviderLogo('gemini')).toBe(`${basePath}images/model-provider/gemini.svg`)
   })
 
   it('returns undefined for unknown providers', () => {
@@ -41,8 +42,10 @@ describe('getProviderTitle', () => {
     expect(getProviderTitle('test')).toBe('Test')
   })
 
-  it('handles empty strings', () => {
-    expect(getProviderTitle('')).toBe('')
+  it('handles empty strings and null/undefined', () => {
+    expect(getProviderTitle('')).toBe('Unknown')
+    expect(getProviderTitle(null as any)).toBe('Unknown')
+    expect(getProviderTitle(undefined as any)).toBe('Unknown')
   })
 })
 
