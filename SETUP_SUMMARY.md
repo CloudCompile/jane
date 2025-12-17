@@ -41,7 +41,7 @@ Created `.github/workflows/deploy.yml` with:
 ### 5. Updated Vite Configuration
 
 Modified `vite.config.web.ts` to:
-- Set base path to `/jane/` when `GITHUB_PAGES=true`
+- Set base path to `/lyra/` when `GITHUB_PAGES=true`
 - Configure proper output directory (`dist-web/`)
 - Alias workspace dependencies to mocks
 - Support both local development and production builds

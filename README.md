@@ -80,7 +80,7 @@ These mocks allow the application to build standalone without the full monorepo.
 ### Build Configuration
 
 The application uses Vite with a custom configuration for GitHub Pages:
-- Base path: `/lyra/` (set via `GITHUB_PAGES=true` environment variable)
+- Base path: `/lyra/` (configured in `vite.config.web.ts`, activated via `GITHUB_PAGES=true` environment variable)
 - Output directory: `dist-web/`
 - Workspace dependencies are resolved via mocks
 

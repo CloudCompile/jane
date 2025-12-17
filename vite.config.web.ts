@@ -42,7 +42,7 @@ function injectGoogleAnalytics(): Plugin {
 }
 
 export default defineConfig({
-  base: process.env.GITHUB_PAGES === 'true' ? '/jane/' : '/',
+  base: process.env.GITHUB_PAGES === 'true' ? '/lyra/' : '/',
   plugins: [
     TanStackRouterVite({
       target: 'react',

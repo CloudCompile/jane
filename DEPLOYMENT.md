@@ -66,7 +66,7 @@ The application is configured to use `/jane/` as the base path when deployed to 
 - Vite config: `vite.config.web.ts`
 
 ```typescript
-base: process.env.GITHUB_PAGES === 'true' ? '/jane/' : '/'
+base: process.env.GITHUB_PAGES === 'true' ? '/lyra/' : '/'
 ```
 
 ### Build Output
