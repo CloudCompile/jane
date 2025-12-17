@@ -42,6 +42,7 @@ function injectGoogleAnalytics(): Plugin {
 }
 
 export default defineConfig({
+  base: process.env.GITHUB_PAGES === 'true' ? '/jane/' : '/',
   plugins: [
     TanStackRouterVite({
       target: 'react',
@@ -78,7 +79,9 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
-      '@janhq/conversational-extension': path.resolve(__dirname, '../extensions-web/src/conversational-web/index.ts'),
+      // Use mock for @jan/extensions-web if the workspace package doesn't exist
+      '@jan/extensions-web': path.resolve(__dirname, './src/test/mocks/extensions-web.ts'),
+      '@janhq/conversational-extension': path.resolve(__dirname, './src/test/mocks/extensions-web.ts'),
     },
   },
   define: {

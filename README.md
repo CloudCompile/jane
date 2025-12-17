@@ -1,6 +1,57 @@
-# React + TypeScript + Vite
+# Jan Web Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React + TypeScript + Vite web application for Jan, an AI assistant platform.
+
+## 🚀 Deployment
+
+This application is automatically deployed to GitHub Pages when changes are pushed to the `main` branch.
+
+**Live Site:** https://cloudcompile.github.io/jane/
+
+### Automatic Deployment
+
+The GitHub Actions workflow (`.github/workflows/deploy.yml`) automatically:
+1. Builds the web application
+2. Deploys to GitHub Pages
+3. Makes the site available at the URL above
+
+### Manual Deployment
+
+To build and test locally:
+
+```bash
+# Run the deployment script
+./deploy.sh
+
+# Or manually:
+yarn install
+GITHUB_PAGES=true yarn build:web
+yarn serve:web
+```
+
+## 🛠️ Development
+
+This application is part of the Jan project and has dependencies on workspace packages:
+- `@janhq/core` - Core functionality package
+- `@jan/extensions-web` - Web extensions package
+
+**Note:** This repository contains the web application extracted from the Jan monorepo. To build successfully, you'll need the full Jan monorepo with all workspace dependencies, or these packages need to be published to npm.
+
+For GitHub Pages deployment, the build process will need to be configured to either:
+1. Include the required workspace packages in the repository
+2. Use published versions of these packages from npm
+3. Mock the dependencies for a standalone build
+
+### Available Scripts
+
+- `yarn dev` - Start development server
+- `yarn build` - Build for production
+- `yarn preview` - Preview production build
+- `yarn lint` - Run ESLint
+- `yarn test` - Run tests
+- `yarn dev:web` - Start web-specific development server
+- `yarn build:web` - Build web application
+- `yarn serve:web` - Serve built web application
 
 Currently, two official plugins are available:
 
