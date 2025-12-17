@@ -157,7 +157,7 @@ export class DefaultModelsService implements ModelsService {
     )
 
     const mmprojFiles = ggufFiles.filter((file) =>
-      file.rfilename?.toLowerCase().includes('mmproj')
+      file.rfilename && file.rfilename.toLowerCase().includes('mmproj')
     )
 
     // Convert regular GGUF files to quants format
