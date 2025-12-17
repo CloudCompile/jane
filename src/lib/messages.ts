@@ -172,12 +172,17 @@ export class CompletionMessagesBuilder {
     refusal?: string,
     calls?: ChatCompletionMessageToolCall[]
   ) {
-    this.messages.push({
+    const message: any = {
       role: 'assistant',
       content: removeReasoningContent(content),
       refusal: refusal,
-      tool_calls: calls,
-    })
+    }
+    // Only include tool_calls if it's a non-empty array
+    // Empty arrays violate OpenAI API spec
+    if (calls && calls.length > 0) {
+      message.tool_calls = calls
+    }
+    this.messages.push(message)
   }
 
   /**

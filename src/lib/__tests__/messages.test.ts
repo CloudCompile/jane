@@ -278,6 +278,22 @@ describe('CompletionMessagesBuilder', () => {
         tool_calls: toolCalls,
       })
     })
+
+    it('should not include tool_calls field when empty array is passed', () => {
+      const builder = new CompletionMessagesBuilder([])
+
+      builder.addAssistantMessage('Response text', undefined, [])
+
+      const result = builder.getMessages()
+      expect(result).toHaveLength(2)
+      expect(result[1]).toEqual({
+        role: 'assistant',
+        content: 'Response text',
+        refusal: undefined,
+      })
+      // Ensure tool_calls is not present (not even as undefined)
+      expect(result[1]).not.toHaveProperty('tool_calls')
+    })
   })
 
   describe('addToolMessage', () => {
