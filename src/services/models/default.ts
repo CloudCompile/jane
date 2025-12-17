@@ -148,16 +148,16 @@ export class DefaultModelsService implements ModelsService {
     // Extract GGUF files from the repository siblings
     const ggufFiles =
       repo.siblings?.filter((file) =>
-        file.rfilename.toLowerCase().endsWith('.gguf')
+        file.rfilename?.toLowerCase().endsWith('.gguf')
       ) || []
 
     // Separate regular GGUF files from mmproj files
     const regularGgufFiles = ggufFiles.filter(
-      (file) => !file.rfilename.toLowerCase().includes('mmproj')
+      (file) => file.rfilename && !file.rfilename.toLowerCase().includes('mmproj')
     )
 
     const mmprojFiles = ggufFiles.filter((file) =>
-      file.rfilename.toLowerCase().includes('mmproj')
+      file.rfilename && file.rfilename.toLowerCase().includes('mmproj')
     )
 
     // Convert regular GGUF files to quants format
