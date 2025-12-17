@@ -32,29 +32,32 @@ export function getModelDisplayName(model: Model): string {
 
 export function getProviderLogo(provider: string) {
   const basePath = import.meta.env.BASE_URL || '/'
+  // Ensure basePath ends with / for proper path concatenation
+  const normalizedBase = basePath.endsWith('/') ? basePath : `${basePath}/`
+  
   switch (provider) {
     case 'jan':
-      return `${basePath}images/model-provider/jan.png`
+      return `${normalizedBase}images/model-provider/jan.png`
     case 'llamacpp':
-      return `${basePath}images/model-provider/llamacpp.svg`
+      return `${normalizedBase}images/model-provider/llamacpp.svg`
     case 'anthropic':
-      return `${basePath}images/model-provider/anthropic.svg`
+      return `${normalizedBase}images/model-provider/anthropic.svg`
     case 'huggingface':
-      return `${basePath}images/model-provider/huggingface.svg`
+      return `${normalizedBase}images/model-provider/huggingface.svg`
     case 'mistral':
-      return `${basePath}images/model-provider/mistral.svg`
+      return `${normalizedBase}images/model-provider/mistral.svg`
     case 'openrouter':
-      return `${basePath}images/model-provider/open-router.svg`
+      return `${normalizedBase}images/model-provider/open-router.svg`
     case 'groq':
-      return `${basePath}images/model-provider/groq.svg`
+      return `${normalizedBase}images/model-provider/groq.svg`
     case 'cohere':
-      return `${basePath}images/model-provider/cohere.svg`
+      return `${normalizedBase}images/model-provider/cohere.svg`
     case 'gemini':
-      return `${basePath}images/model-provider/gemini.svg`
+      return `${normalizedBase}images/model-provider/gemini.svg`
     case 'openai':
-      return `${basePath}images/model-provider/openai.svg`
+      return `${normalizedBase}images/model-provider/openai.svg`
     case 'azure':
-      return `${basePath}images/model-provider/azure.svg`
+      return `${normalizedBase}images/model-provider/azure.svg`
     default:
       return undefined
   }
