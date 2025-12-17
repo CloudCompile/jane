@@ -385,4 +385,102 @@ export const predefinedProviders = [
       },
     ],
   },
+  {
+    active: true,
+    api_key: '',
+    base_url: 'https://gen.pollinations.ai/v1',
+    explore_models_url: 'https://gen.pollinations.ai/v1/models',
+    provider: 'pollinations',
+    settings: [
+      {
+        key: 'api-key',
+        title: 'API Key',
+        description:
+          "The Pollinations.AI API uses API keys for authentication. Visit [Pollinations.AI](https://enter.pollinations.ai) to get your API key. A default key is provided for testing.",
+        controller_type: 'input',
+        controller_props: {
+          placeholder: 'Insert API Key (or use default)',
+          value: '',
+          type: 'password',
+          input_actions: ['unobscure', 'copy'],
+        },
+      },
+      {
+        key: 'base-url',
+        title: 'Base URL',
+        description:
+          'The base endpoint to use. See the [Pollinations.AI API documentation](https://gen.pollinations.ai/docs) for more information.',
+        controller_type: 'input',
+        controller_props: {
+          placeholder: 'https://gen.pollinations.ai/v1',
+          value: 'https://gen.pollinations.ai/v1',
+        },
+      },
+    ],
+    models: [
+      {
+        id: 'openai',
+        name: 'OpenAI (Pollinations)',
+        version: '1.0',
+        description: 'General-purpose chat model via Pollinations.AI',
+        capabilities: ['completion'],
+      },
+      {
+        id: 'openai-fast',
+        name: 'OpenAI Fast (Pollinations)',
+        version: '1.0',
+        description: 'Fast chat model for quick responses via Pollinations.AI',
+        capabilities: ['completion'],
+      },
+      {
+        id: 'gemini',
+        name: 'Gemini (Pollinations)',
+        version: '1.0',
+        description: 'Google Gemini model with search capabilities via Pollinations.AI',
+        capabilities: ['completion', 'tools'],
+      },
+      {
+        id: 'claude',
+        name: 'Claude (Pollinations)',
+        version: '1.0',
+        description: 'Anthropic Claude model via Pollinations.AI',
+        capabilities: ['completion'],
+      },
+      {
+        id: 'flux',
+        name: 'Flux (Image)',
+        version: '1.0',
+        description: 'High-quality image generation model',
+        capabilities: ['image_generation', 'text_to_image'],
+      },
+      {
+        id: 'turbo',
+        name: 'Turbo (Image)',
+        version: '1.0',
+        description: 'Fast image generation for quick results',
+        capabilities: ['image_generation', 'text_to_image'],
+      },
+      {
+        id: 'seedream',
+        name: 'Seedream (Image)',
+        version: '1.0',
+        description: 'Creative image generation with artistic style',
+        capabilities: ['image_generation', 'text_to_image'],
+      },
+      {
+        id: 'veo',
+        name: 'Veo (Video)',
+        version: '1.0',
+        description: 'Text-to-video generation (4-8 seconds)',
+        capabilities: ['video_generation', 'text_to_video'],
+      },
+      {
+        id: 'seedance',
+        name: 'Seedance (Video)',
+        version: '1.0',
+        description: 'Text-to-video and image-to-video generation (2-10 seconds)',
+        capabilities: ['video_generation', 'text_to_video', 'image_to_video'],
+      },
+    ],
+  },
 ]
