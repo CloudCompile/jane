@@ -35,8 +35,9 @@ export const PlatformFeatures: Record<PlatformFeature, boolean> = {
   [PlatformFeature.HTTPS_PROXY]:
     isPlatformTauri() && !isPlatformIOS() && !isPlatformAndroid(),
 
-  // Default model providers (OpenAI, Anthropic, etc.) - disabled for web-only Jan builds
-  [PlatformFeature.DEFAULT_PROVIDERS]: isPlatformTauri(),
+  // Default model providers (OpenAI, Anthropic, etc.) - enabled for all platforms
+  // Web builds can use cloud providers like OpenRouter and Pollinations
+  [PlatformFeature.DEFAULT_PROVIDERS]: true,
 
   // Projects management
   [PlatformFeature.PROJECTS]:

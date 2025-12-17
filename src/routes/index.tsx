@@ -68,11 +68,13 @@ function Index() {
       return provider.models.length > 0
     }
 
-    // Predefined providers need either API key or models (for llamacpp/jan)
+    // Predefined providers need either API key or models (for llamacpp/jan/openrouter/pollinations with free/demo models)
     return (
       provider.api_key?.length ||
       (provider.provider === 'llamacpp' && provider.models.length) ||
-      (provider.provider === 'jan' && provider.models.length)
+      (provider.provider === 'jan' && provider.models.length) ||
+      (provider.provider === 'openrouter' && provider.models.length) ||
+      (provider.provider === 'pollinations' && provider.models.length)
     )
   })
 
