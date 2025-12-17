@@ -618,6 +618,15 @@ function General() {
                       >
                         Apache License 2.0
                       </a>
+                      {' • '}
+                      <a
+                        href="https://github.com/CloudCompile/jane/blob/main/LICENSE"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-accent hover:underline"
+                      >
+                        View LICENSE file
+                      </a>
                     </p>
                   </div>
                 }
