@@ -206,12 +206,12 @@ export const sendCompletion = async (
     baseURL: provider.base_url,
     // Use Tauri's fetch to avoid CORS issues only for openai-compatible provider
     fetch: IS_DEV ? fetch : getServiceHub().providers().fetch(),
-    // OpenRouter identification headers for Jan
+    // OpenRouter identification headers for Lyra
     // ref: https://openrouter.ai/docs/api-reference/overview#headers
     ...(provider.provider === 'openrouter' && {
       defaultHeaders: {
-        'HTTP-Referer': 'https://jan.ai',
-        'X-Title': 'Jan',
+        'HTTP-Referer': 'https://cloudcompile.github.io/lyra',
+        'X-Title': 'Lyra',
       },
     }),
     // Pollinations doesn't support custom headers in CORS requests

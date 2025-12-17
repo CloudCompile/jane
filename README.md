@@ -1,6 +1,6 @@
-# Jan Web Application
+# Lyra Web Application
 
-A React + TypeScript + Vite web application for Jan, an AI assistant platform.
+A React + TypeScript + Vite web application for Lyra, an AI assistant platform.
 
 ## 🚀 Quick Start
 
@@ -55,7 +55,7 @@ The deployment is configured in `.github/workflows/deploy.yml`:
 
 ### Workspace Dependencies
 
-This application was extracted from the Jan monorepo and originally had workspace dependencies:
+This application was originally extracted from the Jan monorepo and had workspace dependencies:
 - `@janhq/core` - Core functionality package
 - `@jan/extensions-web` - Web extensions package
 
@@ -80,7 +80,7 @@ These mocks allow the application to build standalone without the full monorepo.
 ### Build Configuration
 
 The application uses Vite with a custom configuration for GitHub Pages:
-- Base path: `/jane/` (set via `GITHUB_PAGES=true` environment variable)
+- Base path: `/lyra/` (set via `GITHUB_PAGES=true` environment variable)
 - Output directory: `dist-web/`
 - Workspace dependencies are resolved via mocks
 
@@ -183,6 +183,6 @@ If `yarn serve:web` doesn't work:
 
 ## 🔗 Links
 
-- **Live Site:** https://cloudcompile.github.io/jane/
-- **Repository:** https://github.com/CloudCompile/jane
-- **Jan Project:** https://jan.ai
+- **Live Site:** https://cloudcompile.github.io/lyra/
+- **Repository:** https://github.com/CloudCompile/lyra
+- **Original Project:** https://jan.ai
