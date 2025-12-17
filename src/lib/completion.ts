@@ -228,6 +228,13 @@ export const sendCompletion = async (
           headers.delete('x-stainless-timeout')
           headers.delete('x-stainless-retry-count')
           headers.delete('x-stainless-max-retries')
+          headers.delete('x-stainless-os')
+          headers.delete('x-stainless-arch')
+          headers.delete('x-stainless-runtime')
+          headers.delete('x-stainless-runtime-version')
+          headers.delete('x-stainless-lang')
+          headers.delete('x-stainless-package-version')
+          headers.delete('x-stainless-async')
           // Only keep Authorization if API key is provided and non-empty
           if (!provider.api_key || provider.api_key.trim().length === 0) {
             headers.delete('Authorization')
