@@ -603,6 +603,25 @@ function General() {
                   </div>
                 }
               />
+              <CardItem
+                title={t('settings:general.license')}
+                align="start"
+                description={
+                  <div className="text-main-view-fg/70">
+                    <p>{t('settings:general.licenseDesc')}</p>
+                    <p className="mt-2">
+                      <a
+                        href="https://www.apache.org/licenses/LICENSE-2.0"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-accent hover:underline"
+                      >
+                        Apache License 2.0
+                      </a>
+                    </p>
+                  </div>
+                }
+              />
             </Card>
           </div>
         </div>
