@@ -42,8 +42,10 @@
   "reportAnIssueDesc": "Found a bug? Help us out by filing an issue on GitHub.",
   "reportIssue": "Report Issue",
   "credits": "Credits",
-  "creditsDesc1": "👋 Jan is built with ❤️ by the Menlo Research team.",
-  "creditsDesc2": "Special thanks to our open-source dependencies—especially llama.cpp and Tauri—and to our amazing AI community.",
+  "creditsDesc1": "Built on Jan - an open-source AI framework.",
+  "creditsDesc2": "Special thanks to Jan and its contributors, along with our open-source dependencies—especially llama.cpp and Tauri—and to the amazing AI community.",
+  "license": "License",
+  "licenseDesc": "This application is licensed under the Apache License 2.0.",
   "appVersion": "App Version",
   "dataFolder": {
     "appData": "App Data",
@@ -258,8 +260,10 @@
     "reportAnIssueDesc": "Found a bug? Help us out by filing an issue on GitHub.",
     "reportIssue": "Report Issue",
     "credits": "Credits",
-    "creditsDesc1": "👋 Jan is built with ❤️ by the Menlo Research team.",
-    "creditsDesc2": "Special thanks to our open-source dependencies—especially llama.cpp and Tauri—and to our amazing AI community."
+    "creditsDesc1": "Built on Jan - an open-source AI framework.",
+    "creditsDesc2": "Special thanks to Jan and its contributors, along with our open-source dependencies—especially llama.cpp and Tauri—and to the amazing AI community.",
+    "license": "License",
+    "licenseDesc": "This application is licensed under the Apache License 2.0."
   },
   "extensions": {
     "title": "Extensions"
