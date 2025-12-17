@@ -79,9 +79,9 @@ describe('Web-Specific Service Tests', () => {
         'https://api.openai.com/v1/models',
         expect.objectContaining({
           method: 'GET',
-          headers: expect.objectContaining({
-            'Content-Type': 'application/json'
-          })
+          headers: {
+            'Authorization': 'Bearer test-key',
+          }
         })
       )
       expect(models).toEqual(['gpt-4'])
