@@ -2,20 +2,15 @@
 
 A React + TypeScript + Vite web application for Jan, an AI assistant platform.
 
-## 🚀 Deployment
+## 🚀 Quick Start
+
+### Automated Deployment (GitHub Pages)
 
 This application is automatically deployed to GitHub Pages when changes are pushed to the `main` branch.
 
 **Live Site:** https://cloudcompile.github.io/jane/
 
-### Automatic Deployment
-
-The GitHub Actions workflow (`.github/workflows/deploy.yml`) automatically:
-1. Builds the web application
-2. Deploys to GitHub Pages
-3. Makes the site available at the URL above
-
-### Manual Deployment
+### Manual Build
 
 To build and test locally:
 
@@ -29,18 +24,47 @@ GITHUB_PAGES=true yarn build:web
 yarn serve:web
 ```
 
+The built application will be in the `dist-web/` directory.
+
+## 📋 Setup Instructions
+
+### First Time Setup
+
+1. **Extract the zip file** (if starting fresh):
+   - The zip file has already been extracted
+   - It's now in `.gitignore` to prevent re-committing
+
+2. **Enable GitHub Pages**:
+   - Go to repository Settings → Pages
+   - Source: Select "GitHub Actions"
+   - Save the settings
+
+3. **Push to main branch**:
+   - The GitHub Actions workflow will automatically build and deploy
+   - Check the Actions tab for deployment status
+
+### Deployment Configuration
+
+The deployment is configured in `.github/workflows/deploy.yml`:
+- Triggers on push to `main` branch
+- Can also be manually triggered from the Actions tab
+- Builds with `yarn build:web`
+- Deploys to GitHub Pages automatically
+
 ## 🛠️ Development
 
-This application is part of the Jan project and has dependencies on workspace packages:
+### Workspace Dependencies
+
+This application was extracted from the Jan monorepo and originally had workspace dependencies:
 - `@janhq/core` - Core functionality package
 - `@jan/extensions-web` - Web extensions package
 
-**Note:** This repository contains the web application extracted from the Jan monorepo. To build successfully, you'll need the full Jan monorepo with all workspace dependencies, or these packages need to be published to npm.
+**Solution:** Mock implementations are provided in `src/test/mocks/`:
+- `core.ts` - Mock for `@janhq/core`
+- `extensions-web.ts` - Mock for `@jan/extensions-web`
+- `janhq-core/index.ts` - Index file for core package
 
-For GitHub Pages deployment, the build process will need to be configured to either:
-1. Include the required workspace packages in the repository
-2. Use published versions of these packages from npm
-3. Mock the dependencies for a standalone build
+These mocks allow the application to build standalone without the full monorepo.
 
 ### Available Scripts
 
@@ -53,10 +77,40 @@ For GitHub Pages deployment, the build process will need to be configured to eit
 - `yarn build:web` - Build web application
 - `yarn serve:web` - Serve built web application
 
-Currently, two official plugins are available:
+### Build Configuration
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The application uses Vite with a custom configuration for GitHub Pages:
+- Base path: `/jane/` (set via `GITHUB_PAGES=true` environment variable)
+- Output directory: `dist-web/`
+- Workspace dependencies are resolved via mocks
+
+### Technology Stack
+
+- **Framework:** React 19 with TypeScript
+- **Build Tool:** Vite 6
+- **Router:** TanStack Router
+- **Styling:** Tailwind CSS 4
+- **UI Components:** Radix UI primitives
+- **Testing:** Vitest
+
+## 📦 Build Output
+
+A successful build creates:
+- `dist-web/index.html` - Entry point with proper base paths
+- `dist-web/assets/` - Bundled JavaScript and CSS
+- `dist-web/images/` - Static images
+- `dist-web/fonts/` - Web fonts
+
+The build is optimized for production with:
+- Code splitting
+- Minification
+- Asset optimization
+
+## 📚 Documentation
+
+For more detailed information:
+- [DEPLOYMENT.md](./DEPLOYMENT.md) - Complete deployment guide
+- [CONTRIBUTING.md](./CONTRIBUTING.md) - Contribution guidelines
 
 ## Expanding the ESLint configuration
 
@@ -103,3 +157,32 @@ export default tseslint.config({
   },
 })
 ```
+
+## 🐛 Troubleshooting
+
+### Build Issues
+
+If the build fails:
+1. Delete `node_modules` and `yarn.lock`, then run `yarn install`
+2. Clear Vite cache: `rm -rf node_modules/.vite`
+3. Ensure Node.js version 20 or higher is installed
+
+### GitHub Actions Issues
+
+If deployment fails:
+1. Check the Actions tab for error logs
+2. Ensure GitHub Pages is enabled in repository settings
+3. Verify the workflow has proper permissions (Settings → Actions → General → Workflow permissions)
+
+### Local Preview Issues
+
+If `yarn serve:web` doesn't work:
+- Ensure port 3001 is available
+- Try the alternative: `yarn serve:web:alt`
+- Check that `dist-web/` directory exists with built files
+
+## 🔗 Links
+
+- **Live Site:** https://cloudcompile.github.io/jane/
+- **Repository:** https://github.com/CloudCompile/jane
+- **Jan Project:** https://jan.ai
