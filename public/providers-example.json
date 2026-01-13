@@ -1,0 +1,45 @@
+{
+  "version": "1.0",
+  "description": "Example external providers configuration file. Place this in your public directory or host it remotely.",
+  "providers": [
+    {
+      "provider": "custom-openai-compatible",
+      "active": true,
+      "base_url": "https://your-custom-endpoint.com/v1",
+      "explore_models_url": "https://your-docs.com/models",
+      "settings": [
+        {
+          "key": "api-key",
+          "title": "API Key",
+          "description": "Your API key for authentication",
+          "controller_type": "input",
+          "controller_props": {
+            "placeholder": "Insert API Key",
+            "value": "",
+            "type": "password",
+            "input_actions": ["unobscure", "copy"]
+          }
+        },
+        {
+          "key": "base-url",
+          "title": "Base URL",
+          "description": "The base endpoint URL",
+          "controller_type": "input",
+          "controller_props": {
+            "placeholder": "https://your-custom-endpoint.com/v1",
+            "value": "https://your-custom-endpoint.com/v1"
+          }
+        }
+      ],
+      "models": [
+        {
+          "id": "custom-model-1",
+          "name": "Custom Model 1",
+          "version": "1.0",
+          "description": "Your custom model description",
+          "capabilities": ["completion"]
+        }
+      ]
+    }
+  ]
+}

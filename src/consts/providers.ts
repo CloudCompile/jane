@@ -483,4 +483,294 @@ export const predefinedProviders = [
       },
     ],
   },
+  {
+    active: true,
+    api_key: '',
+    base_url: 'https://api.x.ai/v1',
+    explore_models_url: 'https://docs.x.ai/docs',
+    provider: 'xai',
+    settings: [
+      {
+        key: 'api-key',
+        title: 'API Key',
+        description:
+          "The xAI API uses API keys for authentication. Visit your [API Keys](https://console.x.ai/) page to retrieve the API key you'll use in your requests.",
+        controller_type: 'input',
+        controller_props: {
+          placeholder: 'Insert API Key',
+          value: '',
+          type: 'password',
+          input_actions: ['unobscure', 'copy'],
+        },
+      },
+      {
+        key: 'base-url',
+        title: 'Base URL',
+        description:
+          'The base OpenAI-compatible endpoint to use. See the [xAI documentation](https://docs.x.ai/docs) for more information.',
+        controller_type: 'input',
+        controller_props: {
+          placeholder: 'https://api.x.ai/v1',
+          value: 'https://api.x.ai/v1',
+        },
+      },
+    ],
+    models: [
+      {
+        id: 'grok-beta',
+        name: 'Grok Beta',
+        version: '1.0',
+        description: 'xAI Grok large language model with real-time knowledge',
+        capabilities: ['completion', 'tools'],
+      },
+      {
+        id: 'grok-vision-beta',
+        name: 'Grok Vision Beta',
+        version: '1.0',
+        description: 'xAI Grok with vision capabilities',
+        capabilities: ['completion', 'vision', 'tools'],
+      },
+    ],
+  },
+  {
+    active: true,
+    api_key: '',
+    base_url: 'https://api.perplexity.ai',
+    explore_models_url: 'https://docs.perplexity.ai/docs/model-cards',
+    provider: 'perplexity',
+    settings: [
+      {
+        key: 'api-key',
+        title: 'API Key',
+        description:
+          "The Perplexity API uses API keys for authentication. Visit your [API Settings](https://www.perplexity.ai/settings/api) page to retrieve the API key you'll use in your requests.",
+        controller_type: 'input',
+        controller_props: {
+          placeholder: 'Insert API Key',
+          value: '',
+          type: 'password',
+          input_actions: ['unobscure', 'copy'],
+        },
+      },
+      {
+        key: 'base-url',
+        title: 'Base URL',
+        description:
+          'The base OpenAI-compatible endpoint to use. See the [Perplexity documentation](https://docs.perplexity.ai/docs) for more information.',
+        controller_type: 'input',
+        controller_props: {
+          placeholder: 'https://api.perplexity.ai',
+          value: 'https://api.perplexity.ai',
+        },
+      },
+    ],
+    models: [
+      {
+        id: 'llama-3.1-sonar-small-128k-online',
+        name: 'Llama 3.1 Sonar Small (Online)',
+        version: '1.0',
+        description: 'Fast online search model based on Llama 3.1 8B',
+        capabilities: ['completion', 'tools'],
+      },
+      {
+        id: 'llama-3.1-sonar-large-128k-online',
+        name: 'Llama 3.1 Sonar Large (Online)',
+        version: '1.0',
+        description: 'Powerful online search model based on Llama 3.1 70B',
+        capabilities: ['completion', 'tools'],
+      },
+      {
+        id: 'llama-3.1-sonar-huge-128k-online',
+        name: 'Llama 3.1 Sonar Huge (Online)',
+        version: '1.0',
+        description: 'Most powerful online search model based on Llama 3.1 405B',
+        capabilities: ['completion', 'tools'],
+      },
+    ],
+  },
+  {
+    active: true,
+    api_key: '',
+    base_url: 'https://api.together.xyz/v1',
+    explore_models_url: 'https://docs.together.ai/docs/models',
+    provider: 'together',
+    settings: [
+      {
+        key: 'api-key',
+        title: 'API Key',
+        description:
+          "The Together AI API uses API keys for authentication. Visit your [API Keys](https://api.together.xyz/settings/api-keys) page to retrieve the API key you'll use in your requests.",
+        controller_type: 'input',
+        controller_props: {
+          placeholder: 'Insert API Key',
+          value: '',
+          type: 'password',
+          input_actions: ['unobscure', 'copy'],
+        },
+      },
+      {
+        key: 'base-url',
+        title: 'Base URL',
+        description:
+          'The base OpenAI-compatible endpoint to use. See the [Together AI documentation](https://docs.together.ai/docs/quickstart) for more information.',
+        controller_type: 'input',
+        controller_props: {
+          placeholder: 'https://api.together.xyz/v1',
+          value: 'https://api.together.xyz/v1',
+        },
+      },
+    ],
+    models: [],
+  },
+  {
+    active: true,
+    api_key: '',
+    base_url: 'https://api.deepseek.com',
+    explore_models_url: 'https://platform.deepseek.com/api-docs/',
+    provider: 'deepseek',
+    settings: [
+      {
+        key: 'api-key',
+        title: 'API Key',
+        description:
+          "The DeepSeek API uses API keys for authentication. Visit your [API Keys](https://platform.deepseek.com/api_keys) page to retrieve the API key you'll use in your requests.",
+        controller_type: 'input',
+        controller_props: {
+          placeholder: 'Insert API Key',
+          value: '',
+          type: 'password',
+          input_actions: ['unobscure', 'copy'],
+        },
+      },
+      {
+        key: 'base-url',
+        title: 'Base URL',
+        description:
+          'The base OpenAI-compatible endpoint to use. See the [DeepSeek documentation](https://platform.deepseek.com/api-docs/) for more information.',
+        controller_type: 'input',
+        controller_props: {
+          placeholder: 'https://api.deepseek.com',
+          value: 'https://api.deepseek.com',
+        },
+      },
+    ],
+    models: [
+      {
+        id: 'deepseek-chat',
+        name: 'DeepSeek Chat',
+        version: '1.0',
+        description: 'DeepSeek general purpose chat model',
+        capabilities: ['completion', 'tools'],
+      },
+      {
+        id: 'deepseek-reasoner',
+        name: 'DeepSeek Reasoner',
+        version: '1.0',
+        description: 'DeepSeek reasoning model with extended thinking',
+        capabilities: ['completion', 'tools'],
+      },
+    ],
+  },
+  {
+    active: true,
+    api_key: '',
+    base_url: 'https://api.fireworks.ai/inference/v1',
+    explore_models_url: 'https://fireworks.ai/models',
+    provider: 'fireworks',
+    settings: [
+      {
+        key: 'api-key',
+        title: 'API Key',
+        description:
+          "The Fireworks AI API uses API keys for authentication. Visit your [API Keys](https://fireworks.ai/api-keys) page to retrieve the API key you'll use in your requests.",
+        controller_type: 'input',
+        controller_props: {
+          placeholder: 'Insert API Key',
+          value: '',
+          type: 'password',
+          input_actions: ['unobscure', 'copy'],
+        },
+      },
+      {
+        key: 'base-url',
+        title: 'Base URL',
+        description:
+          'The base OpenAI-compatible endpoint to use. See the [Fireworks AI documentation](https://docs.fireworks.ai/) for more information.',
+        controller_type: 'input',
+        controller_props: {
+          placeholder: 'https://api.fireworks.ai/inference/v1',
+          value: 'https://api.fireworks.ai/inference/v1',
+        },
+      },
+    ],
+    models: [],
+  },
+  {
+    active: true,
+    api_key: '',
+    base_url: 'https://openai.api.cloudflare.com/v1',
+    explore_models_url: 'https://developers.cloudflare.com/workers-ai/models/',
+    provider: 'cloudflare',
+    settings: [
+      {
+        key: 'api-key',
+        title: 'API Key',
+        description:
+          "The Cloudflare Workers AI uses API keys for authentication. Visit your [Cloudflare Dashboard](https://dash.cloudflare.com/) to retrieve your API token.",
+        controller_type: 'input',
+        controller_props: {
+          placeholder: 'Insert API Token',
+          value: '',
+          type: 'password',
+          input_actions: ['unobscure', 'copy'],
+        },
+      },
+      {
+        key: 'base-url',
+        title: 'Base URL',
+        description:
+          'The base OpenAI-compatible endpoint to use. See the [Cloudflare Workers AI documentation](https://developers.cloudflare.com/workers-ai/) for more information.',
+        controller_type: 'input',
+        controller_props: {
+          placeholder: 'https://openai.api.cloudflare.com/v1',
+          value: 'https://openai.api.cloudflare.com/v1',
+        },
+      },
+    ],
+    models: [],
+  },
+  {
+    active: true,
+    api_key: '',
+    base_url: 'https://api.sambanova.ai/v1',
+    explore_models_url: 'https://sambanova.ai/products/sambacloud',
+    provider: 'sambanova',
+    settings: [
+      {
+        key: 'api-key',
+        title: 'API Key',
+        description:
+          "The SambaNova API uses API keys for authentication. Visit [SambaNova Cloud](https://sambanova.ai/products/sambacloud) to get your API key.",
+        controller_type: 'input',
+        controller_props: {
+          placeholder: 'Insert API Key',
+          value: '',
+          type: 'password',
+          input_actions: ['unobscure', 'copy'],
+        },
+      },
+      {
+        key: 'base-url',
+        title: 'Base URL',
+        description:
+          'The base OpenAI-compatible endpoint to use.',
+        controller_type: 'input',
+        controller_props: {
+          placeholder: 'https://api.sambanova.ai/v1',
+          value: 'https://api.sambanova.ai/v1',
+        },
+      },
+    ],
+    models: [],
+  },
 ]

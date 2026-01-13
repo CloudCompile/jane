@@ -12,6 +12,7 @@ import type { ProvidersService } from './types'
 import { PlatformFeatures } from '@/lib/platform/const'
 import { PlatformFeature } from '@/lib/platform/types'
 import { getModelCapabilities } from '@/lib/models'
+import { providerRegistry } from '@/lib/providerRegistry'
 
 export class WebProvidersService implements ProvidersService {
   async getProviders(): Promise<ModelProvider[]> {
@@ -103,7 +104,16 @@ export class WebProvidersService implements ProvidersService {
       }
     })
 
-    return runtimeProviders.concat(builtinProviders as ModelProvider[])
+    // Include providers from the registry
+    const externalProviders = providerRegistry.getRegisteredProviders().map((provider) => {
+      return {
+        ...provider,
+        active: provider.active ?? true,
+        models: provider.models ?? [],
+      } as ModelProvider
+    })
+
+    return runtimeProviders.concat(builtinProviders as ModelProvider[]).concat(externalProviders)
   }
 
   async fetchModelsFromProvider(provider: ModelProvider): Promise<string[]> {
@@ -111,103 +121,149 @@ export class WebProvidersService implements ProvidersService {
       throw new Error('Provider must have base_url configured')
     }
 
-    try {
-      const headers: Record<string, string> = {}
+    const maxRetries = 3
+    const retryDelay = 1000 // 1 second
 
-      // Only add authentication headers if API key is provided
-      // Don't add Content-Type for GET requests as it can cause CORS preflight issues
-      if (provider.api_key && provider.api_key.trim().length > 0) {
-        // For Pollinations and similar services that don't require auth, skip headers
-        // to avoid CORS preflight issues
-        if (provider.provider !== 'pollinations') {
-          headers['Authorization'] = `Bearer ${provider.api_key}`
+    for (let attempt = 0; attempt < maxRetries; attempt++) {
+      try {
+        const headers: Record<string, string> = {}
+
+        // Only add authentication headers if API key is provided
+        // Don't add Content-Type for GET requests as it can cause CORS preflight issues
+        if (provider.api_key && provider.api_key.trim().length > 0) {
+          // For Pollinations and similar services that don't require auth, skip headers
+          // to avoid CORS preflight issues
+          if (provider.provider !== 'pollinations') {
+            headers['Authorization'] = `Bearer ${provider.api_key}`
+          }
         }
-      }
 
-      // Use browser's native fetch for web environment
-      const response = await fetch(`${provider.base_url}/models`, {
-        method: 'GET',
-        headers: Object.keys(headers).length > 0 ? headers : undefined,
-      })
+        // Add custom headers if specified
+        if (provider.custom_header) {
+          provider.custom_header.forEach((header) => {
+            headers[header.header] = header.value
+          })
+        }
 
-      if (!response.ok) {
-        // Provide more specific error messages based on status code
-        if (response.status === 401) {
-          throw new Error(
-            `Authentication failed: API key is required or invalid for ${provider.provider}`
-          )
-        } else if (response.status === 403) {
-          throw new Error(
-            `Access forbidden: Check your API key permissions for ${provider.provider}`
-          )
-        } else if (response.status === 404) {
-          throw new Error(
-            `Models endpoint not found for ${provider.provider}. Check the base URL configuration.`
-          )
+        // Use browser's native fetch for web environment
+        const response = await fetch(`${provider.base_url}/models`, {
+          method: 'GET',
+          headers: Object.keys(headers).length > 0 ? headers : undefined,
+        })
+
+        if (!response.ok) {
+          // Provide more specific error messages based on status code
+          if (response.status === 401) {
+            throw new Error(
+              `Authentication failed: API key is required or invalid for ${provider.provider}`
+            )
+          } else if (response.status === 403) {
+            throw new Error(
+              `Access forbidden: Check your API key permissions for ${provider.provider}`
+            )
+          } else if (response.status === 404) {
+            throw new Error(
+              `Models endpoint not found for ${provider.provider}. Check the base URL configuration.`
+            )
+          } else {
+            throw new Error(
+              `Failed to fetch models from ${provider.provider}: ${response.status} ${response.statusText}`
+            )
+          }
+        }
+
+        const data = await response.json()
+
+        // Handle different response formats that providers might use
+        let models: string[] = []
+
+        if (data.data && Array.isArray(data.data)) {
+          // OpenAI format: { data: [{ id: "model-id" }, ...] }
+          models = data.data
+            .map((model: { id?: string; name?: string }) => model.id || model.name)
+            .filter(Boolean)
+        } else if (Array.isArray(data)) {
+          // Direct array format: ["model-id1", "model-id2", ...] or [{ id: "..." }, ...]
+          models = data
+            .filter(Boolean)
+            .map((model) => {
+              if (typeof model === 'string') return model
+              if (typeof model === 'object' && model !== null) {
+                return model.id || model.name || model.model_id
+              }
+              return null
+            })
+            .filter(Boolean) as string[]
+        } else if (data.models && Array.isArray(data.models)) {
+          // Alternative format: { models: [...] }
+          models = data.models
+            .map((model: string | { id?: string; name?: string; model_id?: string }) => {
+              if (typeof model === 'string') return model
+              if (typeof model === 'object' && model !== null) {
+                return model.id || model.name || model.model_id
+              }
+              return null
+            })
+            .filter(Boolean) as string[]
+        } else if (data.object === 'list' && data.data) {
+          // Another OpenAI variant: { object: "list", data: [...] }
+          models = data.data
+            .map((model: { id?: string; name?: string }) => model.id || model.name)
+            .filter(Boolean)
         } else {
+          console.warn('Unexpected response format from provider API:', data)
+          return []
+        }
+
+        return models
+      } catch (error) {
+        // Check if this is a retriable error
+        const isRetriable = 
+          error instanceof Error && 
+          (error.message.includes('fetch') || 
+           error.message.includes('network') ||
+           error.message.includes('timeout'))
+
+        // If it's the last attempt or not retriable, throw the error
+        if (attempt === maxRetries - 1 || !isRetriable) {
+          console.error('Error fetching models from provider:', error)
+
+          const structuredErrorPrefixes = [
+            'Authentication failed',
+            'Access forbidden',
+            'Models endpoint not found',
+            'Failed to fetch models from',
+          ]
+
+          if (
+            error instanceof Error &&
+            structuredErrorPrefixes.some((prefix) =>
+              (error as Error).message.startsWith(prefix)
+            )
+          ) {
+            throw new Error(error.message)
+          }
+
+          // Provide helpful error message for any connection errors
+          if (error instanceof Error && error.message.includes('fetch')) {
+            throw new Error(
+              `Cannot connect to ${provider.provider} at ${provider.base_url}. Please check that the service is running and accessible.`
+            )
+          }
+
+          // Generic fallback
           throw new Error(
-            `Failed to fetch models from ${provider.provider}: ${response.status} ${response.statusText}`
+            `Unexpected error while fetching models from ${provider.provider}: ${error instanceof Error ? error.message : 'Unknown error'}`
           )
         }
+
+        // Wait before retrying
+        await new Promise(resolve => setTimeout(resolve, retryDelay * (attempt + 1)))
       }
-
-      const data = await response.json()
-
-      // Handle different response formats that providers might use
-      if (data.data && Array.isArray(data.data)) {
-        // OpenAI format: { data: [{ id: "model-id" }, ...] }
-        return data.data
-          .map((model: { id: string }) => model.id)
-          .filter(Boolean)
-      } else if (Array.isArray(data)) {
-        // Direct array format: ["model-id1", "model-id2", ...]
-        return data
-          .filter(Boolean)
-          .map((model) =>
-            typeof model === 'object' && 'id' in model ? model.id : model
-          )
-      } else if (data.models && Array.isArray(data.models)) {
-        // Alternative format: { models: [...] }
-        return data.models
-          .map((model: string | { id: string }) =>
-            typeof model === 'string' ? model : model.id
-          )
-          .filter(Boolean)
-      } else {
-        console.warn('Unexpected response format from provider API:', data)
-        return []
-      }
-    } catch (error) {
-      console.error('Error fetching models from provider:', error)
-
-      const structuredErrorPrefixes = [
-        'Authentication failed',
-        'Access forbidden',
-        'Models endpoint not found',
-        'Failed to fetch models from',
-      ]
-
-      if (
-        error instanceof Error &&
-        structuredErrorPrefixes.some((prefix) =>
-          (error as Error).message.startsWith(prefix)
-        )
-      ) {
-        throw new Error(error.message)
-      }
-
-      // Provide helpful error message for any connection errors
-      if (error instanceof Error && error.message.includes('fetch')) {
-        throw new Error(
-          `Cannot connect to ${provider.provider} at ${provider.base_url}. Please check that the service is running and accessible.`
-        )
-      }
-
-      // Generic fallback
-      throw new Error(
-        `Unexpected error while fetching models from ${provider.provider}: ${error instanceof Error ? error.message : 'Unknown error'}`
-      )
     }
+
+    // This should never be reached, but TypeScript needs it
+    return []
   }
 
   async updateSettings(
